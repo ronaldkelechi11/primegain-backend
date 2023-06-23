@@ -14,17 +14,17 @@ router.post('/', (req, res) => {
 
     const user = new User({ username: username, email: email, telephone: telephone, dateAccountCreated: dateAccountCreated, password: password })
     User.findOne({ email, username })
-    .then((response) => {
-        if (response == null) {
-            user.save()
-                .then(res.status(200).send())
-                .catch(err => res.status(501).send())
-        }
-        else {
-            res.status(401).send()
-        }
-    })
-    .catch((err) => { console.log(err), res.send(501) })
+        .then((response) => {
+            if (response == null) {
+                user.save()
+                    .then(res.status(200).send())//user saved
+                    .catch(err => res.status(501).send())// error while saving
+            }
+            else {
+                res.status(401).send()// user exist
+            }
+        })
+        .catch((err) => { console.log(err), res.send(501) })//error while saving 
 })
 
 module.exports = router
